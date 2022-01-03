@@ -1,1 +1,1 @@
-# simple_DOM_benchmark
+Just a simple benchmark for adding, updating, and removing of DOM nodes.
