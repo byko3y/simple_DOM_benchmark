@@ -41,5 +41,5 @@ function timeIt(func) {
   let endTime = performance.now();
   const msg = `Call to ${func.name} took ${endTime - startTime} milliseconds`
   console.log(msg);
-  rslt.push(msg);
+  rslt.push({ msg, code: func.toString() });
 }
