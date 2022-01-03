@@ -1,6 +1,19 @@
 <html>
 <meta>
+  <meta charset="utf-8">
   <script src="func.js"></script> 
+  <script defer>
+    window.onload = function () {
+      window.rsltReady.then((rslt) => {
+        for (const item of rslt) {
+          let p = document.createElement('p');
+          p.textContent = item;
+          document.body.appendChild(p);
+        }
+      });
+    }
+  </script>
 </meta>
-<body></body>
+<body>
+</body>
 </html>

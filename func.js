@@ -1,9 +1,16 @@
+const rsltReady = Promise.resolve().then(() => {
+  timeIt(func_js);
+  timeIt(byko3y_js);
+  return rslt;
+});
+
 let performance;
 if (typeof window === 'undefined') {
   const perf_hooks = require('perf_hooks');
   performance = perf_hooks.performance;
 } else {
   performance = window.performance;
+  window.rsltReady = rsltReady;
 }
 
 let obj = {a: 10};
@@ -26,14 +33,13 @@ function byko3y_js() {
   }
 }
 
-function timeIt(func) {
-  setTimeout(() => {
-    let startTime = performance.now();
-    func()
-    let endTime = performance.now();
-    console.log(`Call to ${func.name} took ${endTime - startTime} milliseconds`);
-  }, 1000);
-}
+let rslt = [];
 
-timeIt(func_js);
-timeIt(byko3y_js);
+function timeIt(func) {
+  let startTime = performance.now();
+  func()
+  let endTime = performance.now();
+  const msg = `Call to ${func.name} took ${endTime - startTime} milliseconds`
+  console.log(msg);
+  rslt.push(msg);
+}
