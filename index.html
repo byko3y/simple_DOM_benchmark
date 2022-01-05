@@ -1,7 +1,8 @@
 <html>
 <head>
+  <meta charset="utf-8">
 <script>
-function testAdd() {
+function testAdd10k() {
   for (let i = 0; i < 10000; i++) {
     e = document.createElement('p'); e.textContent = `line ${i}`; document.body.appendChild(e);
   }
@@ -29,11 +30,40 @@ function testUpdate100() {
   }
 }
 
+function testUpdate10Reflow() {
+  const arr = Array.from(document.getElementsByTagName('p'));
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (i % 100 === 0) {
+      arr[i].textContent = '100';
+    }
+  }
+}
+
 function removeAll() {
   const arr = Array.from(document.getElementsByTagName('p'));
   for (let i = arr.length - 1; i >= 0; i--) {
     document.body.removeChild(arr[i]);
   }
+}
+
+function testUpdate100Reflow(timestamp) {
+  const timerEl = document.getElementById('timer');
+  for (let i = 0; i < 100; i++) {
+    // trigger reflow
+    timerEl.offsetTop;
+    window.scrollX;
+    const el = document.getElementsByTagName('p')[5000 + i];
+    if (el) {
+      el.textContent = i;
+      el.getBoundingClientRect();
+    }
+  }
+}
+
+function update100Reflow() {
+  window.requestAnimationFrame((timestamp) => {
+    timeIt(testUpdate100Reflow);
+  });
 }
 
 function timeIt(func) {
@@ -48,9 +78,10 @@ function timeIt(func) {
 </script>
 </head>
 <body>
-  <button onclick="timeIt(testAdd)">testAdd</button> 
+  <button onclick="timeIt(testAdd10k)">testAdd10k</button> 
   <button onclick="timeIt(testUpdateAll)">testUpdateAll</button>
-  <button onclick="timeIt(testUpdate100)">testUpdate100</button> 
+  <button onclick="timeIt(testUpdate100)">testUpdate100</button>
+  <button onclick="update100Reflow()">update100Reflow</button>
   <button onclick="timeIt(removeAll)">removeAll</button>
   <div id="timer"></div>
 </body>
