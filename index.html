@@ -30,15 +30,6 @@ function testUpdate100() {
   }
 }
 
-function testUpdate10Reflow() {
-  const arr = Array.from(document.getElementsByTagName('p'));
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (i % 100 === 0) {
-      arr[i].textContent = '100';
-    }
-  }
-}
-
 function removeAll() {
   const arr = Array.from(document.getElementsByTagName('p'));
   for (let i = arr.length - 1; i >= 0; i--) {
@@ -48,7 +39,7 @@ function removeAll() {
 
 function testUpdate100Reflow(timestamp) {
   const timerEl = document.getElementById('timer');
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     // trigger reflow
     timerEl.offsetTop;
     window.scrollX;
